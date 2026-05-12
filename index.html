@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INVINCIBLE: Viltrumite Assault</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- ========== STAR BACKGROUND ========== -->
+    <div id="stars-container"></div>
+ 
+    <!-- ========== START SCREEN ========== -->
+    <div id="start-screen" class="screen active">
+        <div class="logo-container">
+            <h1 class="game-title">
+                <span class="title-invincible">INVINCIBLE</span>
+                <span class="title-sub">VILTRUMITE ASSAULT</span>
+            </h1>
+            <div class="title-underline"></div>
+        </div>
+        <div class="tagline">"That's the neat part... you don't."</div>
+        <div class="menu-buttons">
+            <button class="btn btn-primary" id="btn-start">START GAME</button>
+            <button class="btn btn-secondary" id="btn-instructions">HOW TO PLAY</button>
+            <button class="btn btn-secondary" id="btn-leaderboard-menu">LEADERBOARD</button>
+        </div>
+        <div class="credits">A Viltrumite Defense Game</div>
+    </div>
+ 
+    <!-- ========== INSTRUCTIONS SCREEN ========== -->
+    <div id="instructions-screen" class="screen">
+        <h2 class="screen-title">HOW TO PLAY</h2>
+        <div class="instructions-content">
+            <div class="instruction-section">
+                <h3><span class="icon">🎮</span> CONTROLS</h3>
+                <ul>
+                    <li><kbd>←</kbd> / <kbd>A</kbd> — Move Left</li>
+                    <li><kbd>→</kbd> / <kbd>D</kbd> — Move Right</li>
+                    <li><kbd>SPACE</kbd> — Shoot</li>
+                    <li><kbd>P</kbd> — Pause</li>
+                </ul>
+            </div>
+            <div class="instruction-section">
+                <h3><span class="icon">🎯</span> OBJECTIVE</h3>
+                <p>Defend Earth as <strong>Mark Grayson (Invincible)</strong> against waves of Viltrumite invaders! Destroy all enemies to advance through 3 increasingly difficult levels.</p>
+            </div>
+            <div class="instruction-section">
+                <h3><span class="icon">⚠️</span> LEVELS</h3>
+                <ul>
+                    <li><strong>Level 1:</strong> Viltrumite Scouts — Standard enemies</li>
+                    <li><strong>Level 2:</strong> Viltrumite Warriors — Faster, more numerous, they shoot back</li>
+                    <li><strong>Level 3:</strong> Omni-Man Boss Battle — Face the ultimate Viltrumite</li>
+                </ul>
+            </div>
+            <div class="instruction-section">
+                <h3><span class="icon">❤️</span> LIVES & SCORING</h3>
+                <p>You start with <strong>3 lives</strong>. Earn points for each enemy destroyed. Bonus points for completing levels quickly!</p>
+            </div>
+        </div>
+        <button class="btn btn-primary" id="btn-back-start">BACK TO MENU</button>
+    </div>
+ 
+    <!-- ========== NAME INPUT SCREEN ========== -->
+    <div id="name-screen" class="screen">
+        <h2 class="screen-title">ENTER YOUR NAME</h2>
+        <div class="name-input-container">
+            <input type="text" id="player-name-input" class="name-input" placeholder="Your Hero Name..." maxlength="15" autocomplete="off">
+            <p class="input-hint">3-15 characters required</p>
+            <button class="btn btn-primary" id="btn-confirm-name">FIGHT!</button>
+        </div>
+    </div>
+ 
+    <!-- ========== GAME SCREEN ========== -->
+    <div id="game-screen" class="screen">
+        <div id="game-hud">
+            <div class="hud-left">
+                <div class="hud-item">
+                    <span class="hud-label">SCORE</span>
+                    <span class="hud-value" id="hud-score">0</span>
+                </div>
+                <div class="hud-item">
+                    <span class="hud-label">LEVEL</span>
+                    <span class="hud-value" id="hud-level">1</span>
+                </div>
+            </div>
+            <div class="hud-center">
+                <span id="hud-message"></span>
+            </div>
+            <div class="hud-right">
+                <div class="hud-item">
+                    <span class="hud-label">LIVES</span>
+                    <span class="hud-value" id="hud-lives">❤️❤️❤️</span>
+                </div>
+                <div class="hud-item">
+                    <span class="hud-label">AMMO</span>
+                    <span class="hud-value" id="hud-ammo">∞</span>
+                </div>
+            </div>
+        </div>
+        <canvas id="game-canvas"></canvas>
+        <!-- Pause Overlay -->
+        <div id="pause-overlay" class="overlay hidden">
+            <h2>PAUSED</h2>
+            <p>Press <kbd>P</kbd> to resume</p>
+            <button class="btn btn-secondary" id="btn-quit">QUIT TO MENU</button>
+        </div>
+        <!-- Level Transition Overlay -->
+        <div id="level-overlay" class="overlay hidden">
+            <h2 id="level-title">LEVEL 2</h2>
+            <p id="level-desc">Viltrumite Warriors Incoming!</p>
+        </div>
+    </div>
+ 
+    <!-- ========== GAME OVER SCREEN ========== -->
+    <div id="gameover-screen" class="screen">
+        <h2 class="screen-title" id="gameover-title">GAME OVER</h2>
+        <div class="gameover-content">
+            <div class="final-score-display">
+                <span class="final-score-label">FINAL SCORE</span>
+                <span class="final-score-value" id="final-score">0</span>
+            </div>
+            <div class="final-stats">
+                <p>Level Reached: <strong id="final-level">1</strong></p>
+                <p>Enemies Destroyed: <strong id="final-kills">0</strong></p>
+            </div>
+            <div id="score-saved-msg" class="score-saved hidden">Score saved to leaderboard!</div>
+        </div>
+        <div class="menu-buttons">
+            <button class="btn btn-primary" id="btn-play-again">PLAY AGAIN</button>
+            <button class="btn btn-secondary" id="btn-gameover-leaderboard">VIEW LEADERBOARD</button>
+            <button class="btn btn-secondary" id="btn-gameover-menu">MAIN MENU</button>
+        </div>
+    </div>
+ 
+    <!-- ========== VICTORY SCREEN ========== -->
+    <div id="victory-screen" class="screen">
+        <h2 class="screen-title victory-title">VICTORY!</h2>
+        <div class="victory-content">
+            <p class="victory-quote">"I can do this all day... because I'm INVINCIBLE."</p>
+            <div class="final-score-display">
+                <span class="final-score-label">FINAL SCORE</span>
+                <span class="final-score-value" id="victory-score">0</span>
+            </div>
+            <div id="victory-saved-msg" class="score-saved hidden">Score saved to leaderboard!</div>
+        </div>
+        <div class="menu-buttons">
+            <button class="btn btn-primary" id="btn-victory-again">PLAY AGAIN</button>
+            <button class="btn btn-secondary" id="btn-victory-leaderboard">VIEW LEADERBOARD</button>
+            <button class="btn btn-secondary" id="btn-victory-menu">MAIN MENU</button>
+        </div>
+    </div>
+ 
+    <!-- ========== LEADERBOARD SCREEN ========== -->
+    <div id="leaderboard-screen" class="screen">
+        <h2 class="screen-title">LEADERBOARD</h2>
+        <div class="leaderboard-container">
+            <div class="leaderboard-header">
+                <span class="lb-rank">RANK</span>
+                <span class="lb-name">NAME</span>
+                <span class="lb-score">SCORE</span>
+                <span class="lb-date">DATE</span>
+            </div>
+            <div id="leaderboard-list" class="leaderboard-list">
+                <!-- Populated by JS -->
+            </div>
+            <p id="lb-empty" class="lb-empty hidden">No scores yet. Be the first hero!</p>
+        </div>
+        <button class="btn btn-primary" id="btn-lb-back">BACK TO MENU</button>
+    </div>
+ 
+    <script src="js/script.js"></script>
+</body>
+</html>
