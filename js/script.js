@@ -132,7 +132,8 @@ const AudioEngine = {
  
     toggleMusic() {
         this.musicEnabled = !this.musicEnabled;
-        document.getElementById('audio-toggle').textContent = this.musicEnabled ? '🔊' : '🔇';
+        const audioBtn = document.getElementById('audio-toggle');
+        if (audioBtn) audioBtn.textContent = this.musicEnabled ? '🔊' : '🔇';
         if (this.musicEnabled) {
             this.musicGain.gain.setValueAtTime(0.1, this.ctx.currentTime);
         } else {
@@ -357,11 +358,7 @@ const AudioEngine = {
     }
 };
  
-// Audio toggle button
-document.getElementById('audio-toggle').addEventListener('click', () => {
-    AudioEngine.init();
-    AudioEngine.toggleMusic();
-});
+// Audio toggle removed from UI. Keep audio engine available via code.
  
 // ===== SCREEN MANAGEMENT =====
 function showScreen(name) {
@@ -443,7 +440,7 @@ const LEVEL_CONFIG = [
     {
         level: 4, title: 'LEVEL 4', desc: 'THRAGG — Grand Regent of Viltrum!',
         rows: 3, cols: 6, enemySpeed: 2.5, enemyDropSpeed: 35,
-        enemyShoots: true, enemyShootChance: 0.007, ammo: 60,
+        enemyShoots: true, enemyShootChance: 0.007, ammo: 75,
         bossLevel: true, enemyHP: 3, pointsPerKill: 400,
         bossHP: 80, bossName: 'THRAGG', powerUpChance: 0.15,
         thragg: true,
